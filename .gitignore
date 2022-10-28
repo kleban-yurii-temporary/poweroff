@@ -1,0 +1,7 @@
+PowerOff.Core/bin/
+PowerOff.Core/obj/
+PowerOff.Core/Migrations/
+PowerOff.Host/bin/
+PowerOff.Host/obj/
+PowerOff.Initializer/obj/
+PowerOff.Initializer/bin/
