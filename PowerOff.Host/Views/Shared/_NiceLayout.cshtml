@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Components / Accordion - NiceAdmin Bootstrap Template</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    
+    @(await Html.PartialAsync("_NiceLayoutHead"))
+
+</head>
+
+<body>
+    @(await Html.PartialAsync("_NiceLayoutHeader"))
+    @(await Html.PartialAsync("_NiceLayoutNavigation"))
+      <main id="main" class="main">
+    @RenderBody()
+    </main>
+
+
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>
+
+
