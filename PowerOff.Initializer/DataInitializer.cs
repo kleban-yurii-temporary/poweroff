@@ -15,7 +15,6 @@ namespace PowerOff.Core.Initializer
 
         public async Task<List<KeyValuePair<string, int>>> InitAsync(string filepath)
         {
-
             var localityId = await initDefaultLocality();
 
             using (var file = File.OpenRead(filepath))
@@ -74,7 +73,7 @@ namespace PowerOff.Core.Initializer
                     Type = await _dbContext.StreetTypes.FirstAsync(x => x.Title == jo.StreetType),
                 };
 
-                street.Buildings = jo.Buildings.Split(",").Select(x => new Building { Number = x }).ToList();
+                street.Buildings = jo.Buildings.Replace(".", ",").Split(",").Select(x => new Building { Number = x.Trim() }).ToList();
 
                 await _dbContext.Streets.AddAsync(street);
             }
@@ -104,19 +103,14 @@ namespace PowerOff.Core.Initializer
             var locality = await _dbContext.Localities.AddAsync(new Locality
             {
                 Title = "м. Острог",
-                Latitude = 0,
-                Longitude = 0,
-                Moderator = await _dbContext.Users.FirstAsync(x => x.Email == "admin@poweroff.app")
+                Latitude = 26.522975,
+                Longitude = 50.329101,
+                Moderator = await _dbContext.Users.FirstAsync(x => x.Email == "moderator@poweroff.app")
             });
 
             await _dbContext.SaveChangesAsync();
 
             return locality.Entity.Id;
-        }
-
-        private void initSreetTypes(PowerDbContext ctx, IEnumerable<string> types)
-        {
-
-        }
+        }        
     }
 }
