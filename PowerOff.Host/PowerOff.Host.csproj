@@ -886,6 +886,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PowerOff.Core\PowerOff.Core.csproj" />
     <ProjectReference Include="..\PowerOff.Initializer\PowerOff.Core.Initializer.csproj" />
+    <ProjectReference Include="..\PowerOff.Repositories\PowerOff.Repositories.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,3 +6,5 @@ PowerOff.Host/obj/
 PowerOff.Initializer/obj/
 PowerOff.Initializer/bin/
 .vs/
+PowerOff.Repositories/bin/
+PowerOff.Repositories/obj/

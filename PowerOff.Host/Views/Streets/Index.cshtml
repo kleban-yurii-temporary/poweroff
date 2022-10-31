@@ -1,0 +1,76 @@
+﻿@using PowerOff.Core.Entities
+
+@model IEnumerable<Street>
+
+@{
+    Layout = "~/Views/Shared/_NiceLayout.cshtml";
+    var EditAllowed = (bool)ViewBag.EditAllowed;
+}
+<div class="pagetitle">
+    <h1>Перелік вулиць</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Головна</a></li>
+            <li class="breadcrumb-item active">Вулиці</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header"><i class="bi bi-list"></i> Список вулиць</div>
+            <div class="card-body">
+                <br />
+                <table class="table table-stripped" id="streets" style="width:100%">
+
+                    <thead>
+                        <tr>
+                            <th>Назва</th>
+                            <th>Будівлі/Будинки</th>
+                            @if(User.IsInRole("Moderator") && EditAllowed) {
+                                <th>Дії</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var s in Model)
+                        {
+                            <tr>
+                                <td>@s.Type.Title @s.Title</td>
+                                <td>@string.Join(", ", s.Buildings.Select(x=> x.Number))</td>
+                                @if (User.IsInRole("Moderator") && EditAllowed)
+                                {
+                                    <td>
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Редагувати"><i class="bi bi-pencil-square"></i></button>
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Видалити"><i class="bi bi-x-square"></i></button>
+                                        </div>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+
+    <script>
+        $(document).ready(function () {
+
+            $('#streets').DataTable();
+        });
+    </script>
+}

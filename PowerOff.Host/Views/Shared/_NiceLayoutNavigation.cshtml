@@ -6,7 +6,7 @@
         @(await Html.PartialAsync("_LoginPartial"))
 
         <hr />
-              
+
         <li class="nav-item">
             <a class="nav-link collapsed" href="/">
                 <i class="bi bi-grid"></i>
@@ -15,49 +15,58 @@
         </li><!-- End Dashboard Nav -->
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="/events/index">
-                <i class="bi bi-person"></i>
+            <a class="nav-link collapsed" href="/events">
+                <i class="bi bi-calendar-week"></i>
                 <span>Події</span>
             </a>
         </li><!-- End Profile Page Nav -->
 
+
+        <li class="nav-heading">Довідники</li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/streets">
+                <i class="bi bi-building"></i>
+                <span>Вулиці та будівлі</span>
+            </a>
+        </li>
+
+        <!-- End Profile Page Nav -->
         @if (User.IsInRole("Moderator"))
         {
-
-            <li class="nav-heading">Довідники</li>
-
             <li class="nav-item">
                 <a class="nav-link collapsed" href="users-profile.html">
                     <i class="bi bi-person"></i>
                     <span>Типи вулиць</span>
                 </a>
-            </li><!-- End Profile Page Nav -->
+            </li>
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-person"></i>
-                    <span>Вулиці та будівлі</span>
-                </a>
-            </li><!-- End Profile Page Nav -->
+            <!-- End Profile Page Nav -->
+
+
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="pages-faq.html">
-                <i class="bi bi-question-circle"></i>
-                <span>Статуси подій</span>
-            </a>
-        </li><!-- End F.A.Q Page Nav -->
+                    <i class="bi bi-question-circle"></i>
+                    <span>Статуси подій</span>
+                </a>
+            </li>
+
+            <!-- End F.A.Q Page Nav -->
         }
-        
+
         @if (User.IsInRole("Admin"))
         {
             <li class="nav-heading">Довідники</li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="pages-contact.html">
-                <i class="bi bi-envelope"></i>
-                <span>Користувачі</span>
-            </a>
-        </li><!-- End Contact Page Nav -->
+                    <i class="bi bi-envelope"></i>
+                    <span>Користувачі</span>
+                </a>
+            </li>
+
+            <!-- End Contact Page Nav -->
         }
 
     </ul>

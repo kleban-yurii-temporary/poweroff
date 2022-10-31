@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerOff.Core", "PowerOff.Core\PowerOff.Core.csproj", "{13C599C3-7A3F-4B95-9127-32A71B1CB6BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PowerOff.Core", "PowerOff.Core\PowerOff.Core.csproj", "{13C599C3-7A3F-4B95-9127-32A71B1CB6BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerOff.Core.Initializer", "PowerOff.Initializer\PowerOff.Core.Initializer.csproj", "{4712A042-A26F-49D4-AF13-A9881373E63E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PowerOff.Core.Initializer", "PowerOff.Initializer\PowerOff.Core.Initializer.csproj", "{4712A042-A26F-49D4-AF13-A9881373E63E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerOff.Host", "PowerOff.Host\PowerOff.Host.csproj", "{B4F39EBB-C37C-441D-8E00-9A3E1937B740}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PowerOff.Host", "PowerOff.Host\PowerOff.Host.csproj", "{B4F39EBB-C37C-441D-8E00-9A3E1937B740}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CD54D895-F13A-4684-B450-ACD9CE05C984}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerOff.Repositories", "PowerOff.Repositories\PowerOff.Repositories.csproj", "{AB270CB9-3651-4E15-B33C-8A2A9309C16F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{B4F39EBB-C37C-441D-8E00-9A3E1937B740}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4F39EBB-C37C-441D-8E00-9A3E1937B740}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4F39EBB-C37C-441D-8E00-9A3E1937B740}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB270CB9-3651-4E15-B33C-8A2A9309C16F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB270CB9-3651-4E15-B33C-8A2A9309C16F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB270CB9-3651-4E15-B33C-8A2A9309C16F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB270CB9-3651-4E15-B33C-8A2A9309C16F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +43,7 @@ Global
 		{13C599C3-7A3F-4B95-9127-32A71B1CB6BB} = {CD54D895-F13A-4684-B450-ACD9CE05C984}
 		{4712A042-A26F-49D4-AF13-A9881373E63E} = {CD54D895-F13A-4684-B450-ACD9CE05C984}
 		{B4F39EBB-C37C-441D-8E00-9A3E1937B740} = {CD54D895-F13A-4684-B450-ACD9CE05C984}
+		{AB270CB9-3651-4E15-B33C-8A2A9309C16F} = {CD54D895-F13A-4684-B450-ACD9CE05C984}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8E04A231-102A-454A-8530-C9F7CF340A03}

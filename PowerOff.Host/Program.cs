@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PowerOff.Core;
 using PowerOff.Core.Entities;
 using PowerOff.Core.Initializer;
+using PowerOff.Repositories;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,8 +29,12 @@ builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
     
 builder.Services.AddControllersWithViews();
+builder.Services.AddSession();
 
 builder.Services.AddScoped<DataInitializer>();
+builder.Services.AddScoped<StreetsRepository>();
+builder.Services.AddScoped<SessionManager>();
+builder.Services.AddScoped<AccessHelperRepository>();
 
 var app = builder.Build();
 
@@ -53,6 +58,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
