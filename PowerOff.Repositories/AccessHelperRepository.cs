@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PowerOff.Core;
+using PowerOff.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,11 @@ namespace PowerOff.Repositories
         public AccessHelperRepository(PowerDbContext dbContext)
         {
             this.dbContext = dbContext;
+        }
+
+        public async Task<bool> LocalityAccessAllowed(int localityId, string username)
+        {
+            return await dbContext.Users.Include(x => x.ModerateLocality).AnyAsync(x => x.UserName == username && x.ModerateLocality.Id == localityId);
         }
 
         public async Task<bool> StreetAccessAllowed(int streetId, string username)

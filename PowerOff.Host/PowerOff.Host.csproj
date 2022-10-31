@@ -454,6 +454,7 @@
     <None Include="wwwroot\data\init_data.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="wwwroot\lib\transfer\font\iconfont.svg" />
     <None Include="wwwroot\tmp\NiceAdmin\assets\img\not-found.svg" />
     <None Include="wwwroot\tmp\NiceAdmin\assets\js\main.js" />
     <None Include="wwwroot\tmp\NiceAdmin\assets\vendor\apexcharts\apexcharts.min.js" />

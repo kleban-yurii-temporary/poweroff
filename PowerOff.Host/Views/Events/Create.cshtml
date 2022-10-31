@@ -1,0 +1,98 @@
+﻿@{
+    Layout = "~/Views/Shared/_NiceLayout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>Додавання нової події (<span id="localityTitle">-</span>)</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Головна</a></li>
+            <li class="breadcrumb-item"><a href="/events">Події</a></li>
+            <li class="breadcrumb-item active">Нова подія</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <br />
+                <div class="row">
+                    <div class="col">
+                        <div id="streetsDualListbox"></div>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="startDate" class="col-form-label">Дата початку:</label>
+                                <input type="date" value="@DateTime.Now" id="dateStart" class="form-control">
+                            </div>
+                            <div class="col-6">
+                                <label for="inputTime" class="col-form-label">Час початку:</label>
+                                <input type="time" id="timeStart" class="form-control">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="startDate" class="col-form-label">Дата завершення:</label>
+                                <input type="date" value="@DateTime.Now" id="dateStart" class="form-control">
+                            </div>
+                            <div class="col-6">
+                                <label for="inputTime" class="col-form-label">Час завершення:</label>
+                                <input type="time" id="timeStart" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <hr />
+                <div class="row">
+                    <div class="col-12">
+                        <a href="#" class="btn btn-primary btn-large saveClick" style="width:100%">Зберегти</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script type="text/javascript" src="~/lib/transfer/jquery.transfer.js?v=0.0.6"></script>
+    <link rel="stylesheet" type="text/css" href="~/lib/transfer/icon_font.css" />
+    <link rel="stylesheet" type="text/css" href="~/lib/transfer/jquery.transfer.css?v=0.0.3" />
+    <script>
+
+        var streetsList = null;
+
+        $(document).ready(function () {
+
+            $.getJSON("/streets/list", function (data) {
+
+                var dualListboxSettings = {
+                    "dataArray": data,
+                    "tabNameText": "Доступні вулиці",
+                    "rightTabNameText": "Обрані вулиці",
+                    "itemName": "streetName",
+                    "valueName": "streetId",
+                    "callable": function (items) {
+                        console.dir(items)
+                    }
+                };
+
+                streetsList = $("#streetsDualListbox").transfer(dualListboxSettings);
+
+            });
+
+            $(".saveClick").click(function () {
+                alert(JSON.stringify(streetsList.getSelectedItems()));
+            });
+
+        });
+    </script>
+
+    }

@@ -1,0 +1,78 @@
+﻿@using PowerOff.Core.Entities
+
+@model IEnumerable<PowerOffEvent>
+
+@{
+    Layout = "~/Views/Shared/_NiceLayout.cshtml";
+    var EditAllowed = (bool)ViewBag.EditAllowed;
+}
+
+@if (EditAllowed)
+{
+    <a href="/events/create" class="float-end btn btn-success"><i class="bi bi-calendar2-plus"></i>&nbsp;&nbsp; Створити</a>
+}
+
+<div class="pagetitle">
+    <h1>Перелік подій</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Головна</a></li>
+            <li class="breadcrumb-item active">Події</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <br />
+
+                @if (Model.Any())
+                {
+
+                    <table class="table table-stripped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Назва</th>
+                                <th>Будівлі/Будинки</th>
+                                @if (User.IsInRole("Moderator") && EditAllowed)
+                                {
+                                    <th>Дії</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var s in Model)
+                            {
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    @if (User.IsInRole("Moderator") && EditAllowed)
+                                    {
+                                        <td>
+                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Редагувати"><i class="bi bi-pencil-square"></i></button>
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Видалити"><i class="bi bi-x-square"></i></button>
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-square"></i>&nbsp;&nbsp;Інформація про події відсутня.
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+}

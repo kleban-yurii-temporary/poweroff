@@ -35,6 +35,7 @@ builder.Services.AddScoped<DataInitializer>();
 builder.Services.AddScoped<StreetsRepository>();
 builder.Services.AddScoped<SessionManager>();
 builder.Services.AddScoped<AccessHelperRepository>();
+builder.Services.AddScoped<EventRepository>();
 
 var app = builder.Build();
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PowerOff.Host.Models;
 using PowerOff.Repositories;
 
 namespace PowerOff.Host.Controllers
@@ -23,6 +24,16 @@ namespace PowerOff.Host.Controllers
             var data = await streetsRepository.GetListAsync(await sessionManager.GetLocalityId());
             ViewBag.EditAllowed = User.Identity.IsAuthenticated ? await accessHelperRepository.StreetAccessAllowed(data.First().Id, User.Identity.Name) : false;
             return View(data);
+        }
+
+        [Route("/streets/list")]
+        public async Task<IEnumerable<StreetForList>> GetList()
+        {
+            return (await streetsRepository.GetListAsync(await sessionManager.GetLocalityId())).Select(x => new StreetForList
+            {
+                StreetId = x.Id,
+                StreetName = $"{x.Type.ShortTitle} {x.Title}"
+            });
         }
     }
 }
