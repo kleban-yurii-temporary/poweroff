@@ -31,7 +31,7 @@ namespace PowerOff.Host.Controllers
         {
             return (await streetsRepository.GetListAsync(await sessionManager.GetLocalityId())).Select(x => new StreetForList
             {
-                StreetId = x.Id,
+                StreetId = x.Id.ToString(),
                 StreetName = $"{x.Type.ShortTitle} {x.Title}"
             });
         }

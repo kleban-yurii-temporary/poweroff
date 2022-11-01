@@ -1,4 +1,5 @@
 ﻿@using PowerOff.Core.Entities
+@using System.Globalization
 
 @model IEnumerable<PowerOffEvent>
 
@@ -34,8 +35,9 @@
                     <table class="table table-stripped" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Назва</th>
-                                <th>Будівлі/Будинки</th>
+                                <th>Час</th>
+                                <th>Вулиці</th>
+                                <th>Статус</th>
                                 @if (User.IsInRole("Moderator") && EditAllowed)
                                 {
                                     <th>Дії</th>
@@ -46,12 +48,41 @@
                             @foreach (var s in Model)
                             {
                                 <tr>
+                                    <td>
+                                        <small>
+                                        Початок: <strong>@s.StartTime.Value.ToString("dd MMMM yyyy HH:mm", new CultureInfo("uk-UA"))</strong><br />
+                                        Завершення: <strong>@s.EndTime.Value.ToString("dd MMMM yyyy HH:mm", new CultureInfo("uk-UA"))</strong><br />
+                                        Тривалість: <strong>@((s.EndTime - s.StartTime).Value.ToString())</strong>
+                                        </small>
+                                    </td>
                                     <td>-</td>
-                                    <td>-</td>
+                                    <td>
+                                        @if(s.Status.Id == 1) {
+                                            <span class="badge bg-primary"><i class="bi bi-star me-1"></i> Primary</span>
+                                        }
+                                        else  if (s.Status.Id == 2) {
+                                            <span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i> Danger</span>
+                                        }
+                                        
+                                       
+
+                                        <!--
+                                        <span class="badge bg-primary"><i class="bi bi-star me-1"></i> Primary</span>
+                                        <span class="badge bg-secondary"><i class="bi bi-collection me-1"></i> Secondary</span>
+                                        <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> Success</span>
+                                        <span class="badge bg-danger"><i class="bi bi-exclamation-octagon me-1"></i> Danger</span>
+                                        <span class="badge bg-warning text-dark"><i class="bi bi-exclamation-triangle me-1"></i> Warning</span>
+                                        <span class="badge bg-info text-dark"><i class="bi bi-info-circle me-1"></i> Info</span>
+                                        <span class="badge bg-light text-dark"><i class="bi bi-star me-1"></i> Light</span>
+                                        <span class="badge bg-dark"><i class="bi bi-folder me-1"></i> Dark</span>
+
+                                        -->
+                                    </td>
                                     @if (User.IsInRole("Moderator") && EditAllowed)
                                     {
                                         <td>
                                             <div class="btn-group" role="group" aria-label="Basic example">
+                                                <button type="button" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Деталі"><i class="bi bi-pencil-square"></i></button>
                                                 <button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Редагувати"><i class="bi bi-pencil-square"></i></button>
                                                 <button type="button" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Видалити"><i class="bi bi-x-square"></i></button>
                                             </div>

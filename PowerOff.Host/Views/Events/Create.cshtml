@@ -1,9 +1,12 @@
-﻿@{
+﻿@using PowerOff.Core.Entities;
+
+@{
     Layout = "~/Views/Shared/_NiceLayout.cshtml";
+    var locality = ViewBag.Locality as Locality;
 }
 
 <div class="pagetitle">
-    <h1>Додавання нової події (<span id="localityTitle">-</span>)</h1>
+    <h1>Додавання нової події (<span id="localityTitle">@locality.Title</span>)</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Головна</a></li>
@@ -16,7 +19,7 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <div class="card-body">
+            <form id="createForm" class="card-body" method="post" action="/events/create">
                 <br />
                 <div class="row">
                     <div class="col">
@@ -26,28 +29,26 @@
                         <div class="row">
                             <div class="col-6">
                                 <label for="startDate" class="col-form-label">Дата початку:</label>
-                                <input type="date" value="@DateTime.Now" id="dateStart" class="form-control">
+                                <input type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" name="dateStart" class="form-control">
                             </div>
                             <div class="col-6">
                                 <label for="inputTime" class="col-form-label">Час початку:</label>
-                                <input type="time" id="timeStart" class="form-control">
+                                <input type="time" name="timeStart" value="@DateTime.Now.ToString("HH:mm")" class="form-control">
                             </div>
                         </div>
                         <hr />
                         <div class="row">
                             <div class="col-6">
                                 <label for="startDate" class="col-form-label">Дата завершення:</label>
-                                <input type="date" value="@DateTime.Now" id="dateStart" class="form-control">
+                                <input type="date" value="@DateTime.Now.AddHours(4).ToString("yyyy-MM-dd")" name="dateEnd" class="form-control">
                             </div>
                             <div class="col-6">
                                 <label for="inputTime" class="col-form-label">Час завершення:</label>
-                                <input type="time" id="timeStart" class="form-control">
+                                <input type="time" name="timeEnd" value="@DateTime.Now.AddHours(4).ToString("HH:mm")" class="form-control">
                             </div>
                         </div>
                     </div>
                 </div>
-
-
 
                 <hr />
                 <div class="row">
@@ -55,10 +56,27 @@
                         <a href="#" class="btn btn-primary btn-large saveClick" style="width:100%">Зберегти</a>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modal-error" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Перевірка даних</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-danger">
+                -
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+            </div>
+        </div>
+    </div>
+</div><!-- End Vertically centered Modal-->
 
 @section Scripts {
 
@@ -77,8 +95,8 @@
                     "dataArray": data,
                     "tabNameText": "Доступні вулиці",
                     "rightTabNameText": "Обрані вулиці",
-                    "itemName": "streetName",
-                    "valueName": "streetId",
+                    "itemName": "name",
+                    "valueName": "id",
                     "callable": function (items) {
                         console.dir(items)
                     }
@@ -89,7 +107,26 @@
             });
 
             $(".saveClick").click(function () {
-                alert(JSON.stringify(streetsList.getSelectedItems()));
+
+                let streets = streetsList.getSelectedItems();
+                let error = false;
+
+                if(streets.length == 0) {
+                    $("#modal-error .modal-body").html("Помилка. Оберіть вулиція для події!");
+                    error = true;
+                }
+
+                if(error) {
+                  $("#modal-error").modal("show");
+                } else {
+
+                    var input = $("<input>")
+                        .attr("type", "hidden")
+                        .attr("name", "streetsList").val(JSON.stringify(streets));
+
+                    $('#createForm').append(input);
+                    $("#createForm").submit();
+                }
             });
 
         });

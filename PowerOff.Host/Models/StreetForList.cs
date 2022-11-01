@@ -1,8 +1,13 @@
-﻿namespace PowerOff.Host.Models
+﻿using System.Text.Json.Serialization;
+
+namespace PowerOff.Host.Models
 {
     public class StreetForList
     {
-        public string StreetName { get; set; }
-        public int StreetId { get; set; }
+        [JsonPropertyName("name")]
+        public string? StreetName { get; set; }
+
+        [JsonPropertyName("id")]
+        public string? StreetId { get; set; }
     }
 }
