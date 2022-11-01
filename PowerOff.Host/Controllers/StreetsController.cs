@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PowerOff.Host.Models;
 using PowerOff.Repositories;
 
@@ -8,15 +9,18 @@ namespace PowerOff.Host.Controllers
     {
         private readonly StreetsRepository streetsRepository;
         private readonly SessionManager sessionManager;
+        private readonly LocalityRepository localityRepository;
         private readonly AccessHelperRepository accessHelperRepository;
 
         public StreetsController(StreetsRepository streetsRepository, 
             SessionManager sessionManager, 
-            AccessHelperRepository accessHelperRepository)
+            AccessHelperRepository accessHelperRepository,
+            LocalityRepository localityRepository)
         {
             this.streetsRepository = streetsRepository;
             this.sessionManager = sessionManager;
             this.accessHelperRepository = accessHelperRepository;
+            this.localityRepository = localityRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -26,10 +30,11 @@ namespace PowerOff.Host.Controllers
             return View(data);
         }
 
+        [Authorize(Roles = "Moderator, Admin")]
         [Route("/streets/list")]
         public async Task<IEnumerable<StreetForList>> GetList()
         {
-            return (await streetsRepository.GetListAsync(await sessionManager.GetLocalityId())).Select(x => new StreetForList
+            return (await streetsRepository.GetListAsync((await localityRepository.GetLocalityByUserAsync(User.Identity.Name)).Id)).Select(x => new StreetForList
             {
                 StreetId = x.Id.ToString(),
                 StreetName = $"{x.Type.ShortTitle} {x.Title}"

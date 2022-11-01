@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PowerOff.Host.Models;
+using PowerOff.Repositories;
 using System.Diagnostics;
 
 namespace PowerOff.Host.Controllers
@@ -7,15 +8,22 @@ namespace PowerOff.Host.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly LocalityRepository localityRepository;
+        private readonly SessionManager sessionManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,
+            SessionManager sessionManager, 
+            LocalityRepository localityRepository)
         {
             _logger = logger;
+            this.sessionManager = sessionManager;
+            this.localityRepository = localityRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var localityId = await sessionManager.GetLocalityId();
+            return View(await localityRepository.GetLocalityAsync(localityId));
         }
 
         public IActionResult Privacy()

@@ -1,21 +1,26 @@
-﻿@{
-    ViewData["Title"] = "Інформація про віялові відключення електроенергії";
+﻿@using PowerOff.Core.Entities
+@model Locality
+
+@{
+    ViewData["Title"] = $"Інформація про віялові відключення електроенергії у {Model.Title}";
     Layout = "~/Views/Shared/_NiceLayout.cshtml";
 }
 
 <h2>@ViewData["Title"]</h2>
 
 <hr />
-<br />
 
 <style>
     .card {
-        height: 230px;
+        height: 210px;
     }
     .card-header {
         font-family: Nunito;
-        font-size: 20px;
+        font-size: 17px;
         font-weight: 600;
+    }
+    .card-body {
+        font-size: 14px;
     }
 </style>
 
@@ -45,7 +50,7 @@
                 <p>Початок: <strong>12:40 12.10.2022</strong><br />
                 Завершення: <strong>18:40 12.10.2022</strong><br />
                 Тривалість: <strong>01:15</strong></p>
-                <button type="button" class="btn btn-primary rounded-pill float-end">Деталі <i class="bi bi-arrow-right"></i></button>
+                <button type="button" class="btn btn-outline-primary btn-sm float-end">Деталі <i class="bi bi-arrow-right"></i></button>
             </div>
         </div>
     </div>
@@ -59,21 +64,19 @@
                     Завершення: <strong>18:40 12.10.2022</strong><br />
                     Тривалість: <strong>01:15</strong>
                 </p>
-                <button type="button" class="btn btn-primary rounded-pill float-end">Деталі <i class="bi bi-arrow-right"></i></button>
+                <button type="button" class="btn btn-outline-primary btn-sm float-end">Деталі <i class="bi bi-arrow-right"></i></button>
             </div>
         </div>
     </div>
 </div>
 
-<hr />
-
 <style>
 #map { 
-    height: 300px;
     width: 100%;
+    border: 3px solid #fff;
 }
 </style>
-<div id="map">
+<div id="map" class="card">
     <br />
    <div class="d-flex justify-content-center">
                 <div class="spinner-border" role="status">
@@ -86,13 +89,31 @@
     <script src="~/lib/leaflet/leaflet.min.js"></script>
     <link href="~/lib/leaflet/leaflet.min.css" rel="stylesheet" />
     <script>
-        //calculate height on load
-        var map = L.map('map').setView([51.505, -0.09], 13);
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map);
-        var marker = L.marker([51.5, -0.09]).addTo(map);
+
+        function setMapHeight() {
+
+            if ($(window).height() < 600) {
+                $("#map").height(300);
+            } else {
+                $("#map").height($(window).height() - 430);
+            }              
+        }
+        
+        $(function() {
+
+            setMapHeight();
+
+            var map = L.map('map').setView([@Model.Longitude, @Model.Latitude], 15);
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
+            var marker = L.marker([@Model.Longitude, @Model.Latitude]).addTo(map);            
+
+            window.addEventListener('resize', setMapHeight);
+        });
+
+       
     </script>
 }
 
